@@ -14,14 +14,14 @@ CREATE TABLE Orders (
     Date DATE,
     Product_Category VARCHAR(100),
     Unit_price DECIMAL(10,2),
-    Quality INT,
+    Quantity INT,
     Discount_Amount DECIMAL(10,2),
     Total_Amount DECIMAL(10,2),
     Payment_Method VARCHAR(50),
     Device_Type VARCHAR(50),
     Session_Duration_Minutes INT,
     Pages_Viewed INT,
-    Is_Retuming_Customer VARCHAR(20),
+    Is_Returning_Customer VARCHAR(20),
     Delivery_Time_Days INT,
     Customer_Rating DECIMAL(3,2),
 
@@ -169,3 +169,54 @@ FROM Orders
 WHERE Customer_Rating < 0
    OR Customer_Rating > 5
    OR Delivery_Time_Days < 0;
+
+   SELECT COUNT(*) AS Total_Rows
+FROM ecommerce_customer_behavior_dataset_v2;
+
+SELECT COUNT(DISTINCT Customer_ID) AS Unique_Customers
+FROM ecommerce_customer_behavior_dataset_v2;
+
+SELECT COUNT(*) AS Duplicate_Orders
+FROM (
+    SELECT Order_ID
+    FROM ecommerce_customer_behavior_dataset_v2
+    GROUP BY Order_ID
+    HAVING COUNT(*) > 1
+) AS D;
+
+SELECT COUNT(*) AS Inconsistent_Customers
+FROM (
+    SELECT Customer_ID
+    FROM ecommerce_customer_behavior_dataset_v2
+    GROUP BY Customer_ID
+    HAVING COUNT(DISTINCT Age) > 1
+        OR COUNT(DISTINCT Gender) > 1
+        OR COUNT(DISTINCT City) > 1
+) AS C;
+
+SELECT
+    (SELECT COUNT(*)
+     FROM ecommerce_customer_behavior_dataset_v2) AS Original_Rows,
+
+    (SELECT COUNT(*)
+     FROM Orders) AS Uploaded_Orders,
+
+    (SELECT COUNT(*)
+     FROM Customers) AS Uploaded_Customers;
+
+     SELECT COUNT(*) AS Unmatched_Orders
+FROM Orders O
+LEFT JOIN Customers C
+    ON O.Customer_ID = C.Customer_ID
+WHERE C.Customer_ID IS NULL;
+
+SELECT
+    COUNT(*) AS Total_Rows,
+    COUNT(Order_ID) AS Order_ID,
+    COUNT(Customer_ID) AS Customer_ID,
+    COUNT(Date) AS Order_Date,
+    COUNT(Unit_Price) AS Unit_Price,
+    COUNT(Quantity) AS Quantity,
+    COUNT(Total_Amount) AS Total_Amount,
+    COUNT(Customer_Rating) AS Customer_Rating
+FROM Orders;
