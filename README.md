@@ -1,116 +1,133 @@
 E-Commerce Customer Behavior Analysis
 
-1. Project Overview
+Project Overview
 
-This project focuses on analyzing e-commerce customer behavior using SQL Server.
+This project focuses on analyzing customer behavior in an e-commerce business using SQL Server. It aims to transform raw customer and order data into meaningful business insights that can help understand purchasing patterns, customer preferences, and sales performance.
 
-The goal is to organize customer and order data, perform data quality checks, 
-and extract meaningful business insights that can help improve business decisions.
+Dataset
 
-2. Dataset Information
-
-- Dataset: E-Commerce Customer Behavior
+- Dataset Name: E-Commerce Customer Behavior Dataset v2
+- Source: Kaggle
 - Total Records: 17,049
-- Total Columns: 18
-- Total Unique Customers: 5,000
+- Number of Features: 18
+- Unique Customers: 5,000
 
-The dataset contains information about customers, orders, products, payments, devices,
- delivery times, and customer ratings.
+The dataset contains information about customers, orders, product categories, payment methods, devices, session behavior, delivery times, discounts, and customer ratings.
 
-3. Tools & Technologies
+Business Problem
+
+E-commerce businesses need to understand how customers interact with their platforms and what factors influence their purchasing decisions.
+
+This project addresses several business questions, including:
+
+- Which product categories generate the highest sales?
+- Which cities have the highest revenue?
+- What are the most popular payment methods?
+- How do returning customers compare with new customers?
+- Which devices are most commonly used for purchases?
+- What is the average customer rating for each product category?
+- How does delivery time vary across cities and product categories?
+- Who are the top-spending customers?
+
+Database Design
+
+The database is named "EcommerceDB" and consists of two main tables:
+
+1. Customers
+
+Stores customer information.
+
+Column| Description
+Customer_ID| Primary Key
+Age| Customer age
+Gender| Customer gender
+City| Customer city
+
+2. Orders
+
+Stores order and purchasing information.
+
+Column| Description
+Order_ID| Primary Key
+Customer_ID| Foreign Key
+Date| Order date
+Product_Category| Purchased product category
+Unit_Price| Price per unit
+Quantity| Number of purchased units
+Discount_Amount| Applied discount
+Total_Amount| Total order amount
+Payment_Method| Payment method
+Device_Type| Device used for ordering
+Session_Duration_Minutes| Session duration
+Pages_Viewed| Number of pages viewed
+Is_Returning_Customer| Returning customer status
+Delivery_Time_Days| Delivery duration
+Customer_Rating| Customer rating
+
+Relationship
+
+One customer can place multiple orders.
+
+Relationship: One-to-Many (1:M)
+
+"Customers (1) → Orders (Many)"
+
+Tools & Technologies
 
 - Microsoft SQL Server
 - SQL Server Management Studio (SSMS)
 - SQL
+- GitHub
+- Draw.io
 
-4. Database Design
+SQL Analysis
 
-The database is named "EcommerceDB".
+The project includes 15 business analysis queries covering:
 
-The data was organized into two main tables:
+1. Total sales by product category.
+2. Sales by city.
+3. Most popular payment method.
+4. Returning vs. new customer analysis.
+5. Average customer rating by product category.
+6. Average delivery time by city.
+7. Most used device type.
+8. Total quantity sold by product category.
+9. Average order value by city.
+10. Average session duration by device type.
+11. Total sales by payment method.
+12. Average customer rating by device type.
+13. Average delivery time by product category.
+14. Total sales by device type.
+15. Average discount by product category.
 
-Customers Table
+Data Validation
 
-- Customer_ID (Primary Key)
-- Age
-- Gender
-- City
+Several validation checks were performed to ensure data quality and consistency:
 
-Orders Table
+- Verified the total number of records.
+- Checked the number of unique customers.
+- Checked for duplicate Order IDs.
+- Checked for inconsistent customer information.
+- Verified successful data insertion into the database.
+- Checked customer-order relationships.
+- Checked missing values and invalid data values.
 
-- Order_ID (Primary Key)
-- Customer_ID (Foreign Key)
-- Date
-- Product_Category
-- Unit_Price
-- Quantity
-- Discount_Amount
-- Total_Amount
-- Payment_Method
-- Device_Type
-- Session_Duration_Minutes
-- Pages_Viewed
-- Is_Returning_Customer
-- Delivery_Time_Days
-- Customer_Rating
+Validation Results
 
-Relationship
+- Original Records: 17,049
+- Uploaded Orders: 17,049
+- Unique Customers: 5,000
+- Duplicate Orders: 0
+- Inconsistent Customers: 0
 
-- One customer can have multiple orders.
-- Each order belongs to one customer.
-- Relationship: One-to-Many (1:M).
+Project Files
 
-5. Project Tasks
+- "Database_design.sql" – Database creation, table creation, and data insertion.
+- "Business_Analysis.sql" – Business analysis queries and insights.
+- "Indexes_and_Views.sql" – Database indexes and views.
+- "ERD.drawio.png" – Database relationship diagram.
 
-- Database creation.
-- Database table creation.
-- Data import and organization.
-- Primary and Foreign Key implementation.
-- Data validation and quality checks.
-- Business analysis using SQL queries.
-- Creating Indexes.
-- Creating Views.
+Project Goal
 
-6. Business Insights
-
-The analysis revealed several useful insights:
-
-1. Electronics generated the highest total sales among product categories.
-2. Istanbul recorded the highest total sales among cities.
-3. Credit Card was the most frequently used payment method.
-4. Returning customers accounted for approximately 88.2% of all orders.
-5. Mobile devices generated the highest total sales.
-6. Home & Garden had the highest average customer rating among product categories.
-
-7. Indexes
-
-Three Nonclustered Indexes were created to support frequently used queries:
-
-- IX_Orders_Customer_ID
-- IX_Orders_Date
-- IX_Orders_Product_Category
-
-8. Views
-
-Five SQL Views were created:
-
-- vw_TotalSalesByCategory
-- vw_TotalSalesByCity
-- vw_OrdersByPaymentMethod
-- vw_AvgRatingByCategory
-- vw_CustomerOrdersAndSales
-
-These Views simplify access to frequently used business analysis results.
-
-9. Project Files
-
-- 01_Database_Design.sql
-- 02_Business_Analysis.sql
-- 03_Indexes_and_Views.sql
-- README.md
-
-10. Conclusion
-
-This project demonstrates how SQL Server can be used to organize e-commerce data,
- validate database records, analyze customer behavior,
- and generate business insights to support better decision-making.
+The main goal is to demonstrate how SQL can be used to organize,
+ validate, and analyze e-commerce data to support better business decisions.
