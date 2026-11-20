@@ -79,6 +79,7 @@ ORDER BY Total_Quantity_Sold DESC;
 
 SELECT
     C.City,
+    COUNT(O.Order_ID) AS Total_Orders,
     AVG(O.Total_Amount) AS Average_Order_Value
 FROM Orders O
 JOIN Customers C
@@ -141,3 +142,4 @@ SELECT
 FROM Orders
 GROUP BY Product_Category
 ORDER BY Average_Discount DESC;
+
